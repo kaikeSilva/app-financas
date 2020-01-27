@@ -10,7 +10,7 @@
     <script src="finans.js"></script>
     <title>Finans</title>
 </head>
-<body>
+<body onload="carregaListaDespesas()">
     <div class=" bg-success">
         <div class="row display-1 topo">
             <span class="ml-5 display-3 text-light">Finans</span>
@@ -18,7 +18,7 @@
     </div>
     <div class="row mt-5 ml-5">
 
-        <form action="" onsubmit="return false" class="col-4" method="post">
+        <form action="" onsubmit="return false" class="col-3" method="post">
 
             <div class="container d-flex">
                 <!-- data -->    
@@ -125,19 +125,8 @@
                         <th>Valor</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td scope="row"></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td scope="row"></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                <tbody id="lista-despesas">
+                    
                 </tbody>
                 <tfoot>
                     <tr>

@@ -34,7 +34,6 @@ class Bd {
     getProximoId () {
         //logica para incrementar id's no localstorage
         let proxId = parseInt(localStorage.getItem('id'))
-        console.log(proxId)
         return  proxId +1
         
     }
@@ -45,6 +44,22 @@ class Bd {
         localStorage.setItem( id, JSON.stringify(despesa) )
 
         localStorage.setItem('id', id)
+    }
+
+    recuperarTodosRegistros () {
+        let despesas = Array()
+        let id = localStorage.getItem('id')
+
+        for (let index = 1; index <= id; index++) {
+            
+            let despesa = JSON.parse(localStorage.getItem(index))
+            if (despesa != null) {
+                despesas.push(despesa)    
+            }
+            
+        }
+
+        return despesas
     }
 }
 
@@ -78,7 +93,7 @@ function cadastrarDespesa () {
 
     if (despesa.validaDados()) {
         bd.gravar(despesa)
-        
+
         //remover classes de erro
         document.getElementById('modal-btn').classList.remove('btn-danger')
         document.getElementById('modal-div').classList.remove('text-danger')
@@ -92,6 +107,7 @@ function cadastrarDespesa () {
 
         $('#sucessoGravacao').modal('show')
         //limpar dados dos inputs
+        location.reload()
     } else {
         //remover classes de sucesso
         document.getElementById('modal-btn').classList.remove('btn-success')
@@ -107,6 +123,35 @@ function cadastrarDespesa () {
     }
 
 
+}
+
+function carregaListaDespesas () {
+    let despesas = Array()
+    despesas = bd.recuperarTodosRegistros()
+
+    let listaDespesas = document.getElementById('lista-despesas')
+    
+    /*
+    <tr>
+        0 = <td scope="row"></td>
+        1 = <td></td>
+        2 = <td></td>
+        3 = <td></td>
+    </tr>
+    */
+
+    despesas.forEach( function(d) {
+        //criar a linha na tabela
+        let linha = listaDespesas.insertRow()
+        
+        //criar colunas
+        linha.insertCell(0).innerHTML = `${d.dia}/${d.mes}/${d.ano}`
+        linha.insertCell(1).innerHTML = d.tipo
+        linha.insertCell(2).innerHTML = d.descricao
+        linha.insertCell(3).innerHTML = d.valor
+        
+    })
+    
 }
 
 function leapYear(year){
