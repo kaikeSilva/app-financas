@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="estilo.css">
+    <script src="finans.js"></script>
+    <title>Finans</title>
+</head>
+<body>
+    <div class=" bg-success">
+        <div class="row display-1 topo">
+            <span class="ml-5 display-3 text-light">Finans</span>
+        </div>
+    </div>
+    <div class="row mt-5 ml-5">
+
+        <form action="" onsubmit="return false" class="col-4" method="post">
+
+            <div class="container d-flex">
+                <!-- data -->    
+                <div class="d-flex flex-column text-success font-weight-bold ">
+                    <label for="ano" class="" >Ano</label>
+                    <select class="custom-select opcao-data" id="ano" name="ano">
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                    </select>
+                </div>
+
+                <div class="ml-3 d-flex text-success flex-column font-weight-bold">
+                    <label for="mes" class="" >Mes</label>
+                    <select class="custom-select opcao-data" name="mes" >
+                        <option value="1">Janeiro</option>
+                        <option value="2">Fevereiro</option>
+                        <option value="3">Março</option>
+                        <option value="4">Abril</option>
+                        <option value="5">Maio</option>
+                        <option value="6">junho</option>
+                        <option value="7">Julho</option>
+                        <option value="8">Agosto</option>
+                        <option value="9">Setembro</option>
+                        <option value="10">Outubro</option>
+                        <option value="11">Novembro</option>
+                        <option value="12">Dezembro</option>
+                    </select>
+                </div>
+
+                <div class=" ml-3 d-flex text-success flex-column font-weight-bold">
+                    <label for="dia" class="" >Dia</label>
+                    <select class="custom-select opcao-data" name="dia" >
+                        <option value="1">01</option>
+                        <option value="2">02</option>
+                        <option value="3">03</option>
+                        <option value="4">04</option>
+                        <option value="5">05</option>
+                        <option value="6">06</option>
+                        <option value="7">07</option>
+                        <option value="8">08</option>
+                        <option value="9">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24</option>
+                        <option value="25">25</option>
+                        <option value="26">26</option>
+                        <option value="27">27</option>
+                        <option value="28">28</option>
+                        <option value="29">29</option>
+                        <option value="30">30</option>
+                        <option value="31">31</option>
+                    </select>
+                </div>
+
+            </div>
+
+            
+            <div class="container">
+                <!-- Tipo -->
+                <div class="d-flex flex-column mt-5 text-success font-weight-bold ">
+                    <label for="tipo">Tipo</label>
+                    <input name="tipo" type="text">
+                </div>
+
+                <!-- descricao -->
+                <div class="d-flex flex-column text-success mt-5 font-weight-bold ">
+                    <label for="descricao">Descrição</label>
+                    <input name="descricao" type="text">
+                </div>
+
+                <!-- Valor -->
+                <div class="d-flex flex-column text-success mt-5 font-weight-bold ">
+                    <label for="valor">Valor</label>
+                    <input name="valor" type="number" step="0.01">
+                </div>
+
+                <input onclick="cadastrarDespesa()" type="submit" value="Cadastrar" class="bt btn-success mt-5 btn-lg">
+            </div>
+
+        </form>
+
+        <div class="container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Tipo</th>
+                        <th>Categoria</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td scope="row"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td scope="row"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th id="total" colspan="3">Total :</th>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="sucessoGravacao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div id="modal-div"  class="modal-header">
+            <h5 id="modal-titulo" class="modal-title" id="exampleModalLabel">Registro inserido com sucesso</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div id="modal-corpo" class="modal-body">
+                Despesa foi cadastrada com sucesso
+            </div>
+            <div class="modal-footer">
+            <button id="modal-btn" type="button" class="btn" data-dismiss="modal">Voltar</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>
