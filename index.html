@@ -11,16 +11,36 @@
     <title>Finans</title>
 </head>
 <body onload="carregaListaDespesas()">
-    <div class=" bg-success">
-        <div class="row display-1 topo">
-            <span class="ml-5 display-3 text-light">Finans</span>
+    <header class="">
+        <div class="text-light bg-success">
+            <nav class="navbar navbar-expand-lg navbar-success bg-success fixed-top">
+                <a class="navbar-brand">Finasn</a>
+    
+                <button class="navbar-toggler" data-target="#my-nav" data-toggle="collapse" aria-controls="my-nav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+    
+                <div id="my-nav" class="collapse navbar-collapse">
+                    <ul class="navbar-nav  ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link text-light" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled text-light" href="consultas.html" tabindex="-1" aria-disabled="true">Consultas</a>
+                        </li>
+                    </ul>
+                </div>
+    
+            </nav>
         </div>
-    </div>
-    <div class="row mt-5 ml-5">
+    </header>
 
-        <form action="" onsubmit="return false" class="col-3" method="post">
+<div class="container mt-5">
+    <div class="row">
 
-            <div class="container d-flex">
+        <form action="" onsubmit="return false" class=" mb-5" method="post">
+
+            <div class="container d-flex mt-5">
                 <!-- data -->    
                 <div class="d-flex flex-column text-success font-weight-bold ">
                     <label for="ano" class="" >Ano</label>
@@ -93,15 +113,23 @@
             
             <div class="container">
                 <!-- Tipo -->
-                <div class="d-flex flex-column mt-5 text-success font-weight-bold ">
-                    <label for="tipo">Tipo</label>
-                    <input name="tipo" type="text">
+                <div class="text-success font-weight-bold mt-5">
+                    <label for="ano" class="d-block" >Tipo</label>
+                    <select class="custom-select opcao-data" name="tipo">
+                        <option value="alimentacao">alimentacao</option>
+                        <option value="transporte">transporte</option>
+                        <option value="mensal">mensal</option>
+                        <option value="saude">saúde</option>
+                        <option value="telefone">telefone</option>
+                        <option value="lazer">lazer</option>
+                        <option value="outro">outro</option>
+                    </select>
                 </div>
 
                 <!-- descricao -->
                 <div class="d-flex flex-column text-success mt-5 font-weight-bold ">
                     <label for="descricao">Descrição</label>
-                    <input name="descricao" type="text">
+                    <textarea name="descricao"  cols="30" rows="10"></textarea>
                 </div>
 
                 <!-- Valor -->
@@ -114,8 +142,12 @@
             </div>
 
         </form>
-
-        <div class="container">
+        
+    </div>
+</div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="container mt-5">
             <table class="table">
                 <thead>
                     <tr>
@@ -126,18 +158,19 @@
                     </tr>
                 </thead>
                 <tbody id="lista-despesas">
-                    
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th id="total" colspan="3">Total :</th>
-                        <td></td>
+                        <th  colspan="3">Total :</th>
+                        <td id="total" class="text-danger font-weight-bold" ></td>
                     </tr>
                 </tfoot>
             </table>
         </div>
 
     </div>
+</div>
+
 
 
     <!-- Modal -->
@@ -154,7 +187,7 @@
                 Despesa foi cadastrada com sucesso
             </div>
             <div class="modal-footer">
-            <button id="modal-btn" type="button" class="btn" data-dismiss="modal">Voltar</button>
+            <button id="modal-btn"  type="button" class="btn" data-dismiss="modal">Voltar</button>
             </div>
         </div>
         </div>

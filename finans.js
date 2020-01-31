@@ -30,6 +30,39 @@ class Bd {
             localStorage.setItem('id' , 0)
         } 
     }
+
+    pesquisar (despesa) {
+        let despesasFiltradas = Array()
+        despesasFiltradas = this.recuperarTodosRegistros()
+        console.log('completo',despesasFiltradas)
+
+
+        if(despesa.ano != '') {
+            despesasFiltradas = despesasFiltradas.filter( d => d.ano == despesa.ano)
+        }
+
+        if(despesa.mes != '') {
+            despesasFiltradas = despesasFiltradas.filter( d => d.mes == despesa.mes)
+        }
+
+        if(despesa.dia != '') {
+            despesasFiltradas = despesasFiltradas.filter( d => d.dia == despesa.dia)
+        }
+        if(despesa.tipo != '') {
+            despesasFiltradas = despesasFiltradas.filter( d => d.tipo == despesa.tipo)
+        }
+
+        if(despesa.descricao != '') {
+            despesasFiltradas = despesasFiltradas.filter( d => d.descricao == despesa.descricao)
+        }
+
+        if(despesa.valor != '') {
+            despesasFiltradas = despesasFiltradas.filter( d => d.valor == despesa.valor)
+        }
+
+        return despesasFiltradas
+        
+    }
     
     getProximoId () {
         //logica para incrementar id's no localstorage
@@ -46,6 +79,27 @@ class Bd {
         localStorage.setItem('id', id)
     }
 
+    remover (id) {
+        console.log(id)
+        localStorage.removeItem(id)
+
+        //remover classes de sucesso
+        document.getElementById('modal-btn').classList.remove('btn-danger')
+        document.getElementById('modal-div').classList.remove('text-danger')
+
+        //adicionar formatação de erro
+        document.getElementById('modal-btn').classList.add('btn-success')
+        document.getElementById('modal-btn').innerHTML = 'Voltar'
+        document.getElementById('modal-div').classList.add('text-success')
+        document.getElementById('modal-titulo').innerHTML = 'Deletar despesa'
+        document.getElementById('modal-corpo').innerHTML = 'Despesa removida com sucesso'
+        $('#sucessoGravacao').modal('show')
+
+         //limpar dados dos inputs
+         document.getElementById('modal-btn').addEventListener('click',function () {location.reload()})
+
+    }
+
     recuperarTodosRegistros () {
         let despesas = Array()
         let id = localStorage.getItem('id')
@@ -54,6 +108,7 @@ class Bd {
             
             let despesa = JSON.parse(localStorage.getItem(index))
             if (despesa != null) {
+                despesa.id = index
                 despesas.push(despesa)    
             }
             
@@ -77,7 +132,9 @@ function cadastrarDespesa () {
     let dia = document.getElementsByName('dia')[0].options[
         document.getElementsByName('dia')[0].selectedIndex
     ]
-    let tipo = document.getElementsByName('tipo')[0]
+    let tipo = document.getElementsByName('tipo')[0].options[
+        document.getElementsByName('tipo')[0].selectedIndex
+    ]
     let descricao = document.getElementsByName('descricao')[0]
     let valor = document.getElementsByName('valor')[0]
 
@@ -107,7 +164,7 @@ function cadastrarDespesa () {
 
         $('#sucessoGravacao').modal('show')
         //limpar dados dos inputs
-        location.reload()
+        document.getElementById('modal-btn').addEventListener('click',function () {location.reload()})
     } else {
         //remover classes de sucesso
         document.getElementById('modal-btn').classList.remove('btn-success')
@@ -124,10 +181,16 @@ function cadastrarDespesa () {
 
 
 }
+function recarregar() {
+    //location.reload()
+}
+function carregaListaDespesas (despesas = Array(), filtro = false) {
 
-function carregaListaDespesas () {
-    let despesas = Array()
-    despesas = bd.recuperarTodosRegistros()
+    if (despesas.length == 0 && filtro == false) {
+        despesas = bd.recuperarTodosRegistros()
+    }
+    
+    let total = 0
 
     let listaDespesas = document.getElementById('lista-despesas')
     
@@ -149,8 +212,50 @@ function carregaListaDespesas () {
         linha.insertCell(1).innerHTML = d.tipo
         linha.insertCell(2).innerHTML = d.descricao
         linha.insertCell(3).innerHTML = d.valor
+
+        total += parseFloat(d.valor)
+
+        let btn = document.createElement('button')
+
+        btn.className = 'btn btn-danger font-weight-bold'
+        btn.innerHTML = 'x'
+        btn.id = `id-despesa-${d.id}` 
+        btn.onclick = function() {
+            let id = this.id.replace('id-despesa-','')
+            bd.remover(id)
+        }
+        console.log(btn)
+
+        linha.insertCell(4).append(btn)
         
     })
+
+    totalDespesas = document.getElementById('total')
+    totalDespesas.innerHTML = total.toFixed(2)
+    
+}
+
+function pesquisarDespesa() {
+    let ano = document.getElementById('ano').value
+    let mes = document.getElementById('mes').value
+    let dia = document.getElementById('dia').value
+    let tipo = document.getElementById('tipo').value
+    let descricao = document.getElementById('descricao').value
+    let valor = document.getElementById('valor').value
+
+    let total = 0
+
+    let despesasFiltradas = Array()
+
+    let despesa = new Despesa(ano,mes,dia,tipo,descricao,valor)
+
+    despesasFiltradas = bd.pesquisar(despesa)
+
+    let listaDespesas = document.getElementById('lista-despesas')
+
+    listaDespesas.innerHTML = ''
+
+    carregaListaDespesas(despesasFiltradas,true)
     
 }
 
